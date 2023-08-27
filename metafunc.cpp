@@ -21,10 +21,10 @@ struct is_vector_or_list<std::list<T>> : std::true_type
 };
 
 template <typename T>
-inline constexpr bool is_vector_or_list_v = is_vector_or_list<T>::value;
+constexpr bool is_vector_or_list_v = is_vector_or_list<T>::value;
 
 template <typename T>
-inline typename std::enable_if<std::is_integral<T>::value, void>::type
+typename std::enable_if<std::is_integral<T>::value, void>::type
 ip_filter(const T &_ip)
 {
   std::string res{};
@@ -52,7 +52,7 @@ ip_filter(const T &_ip)
 }
 
 template <typename T>
-inline typename std::enable_if<std::is_same<T, std::string>::value, void>::type
+typename std::enable_if<std::is_same<T, std::string>::value, void>::type
 ip_filter(const T &_ip)
 {
   std::cout << _ip << std::endl;
