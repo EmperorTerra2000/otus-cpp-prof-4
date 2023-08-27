@@ -21,10 +21,10 @@ struct is_vector_or_list<std::list<T>> : std::true_type
 };
 
 template <typename T>
-constexpr bool is_vector_or_list_v = is_vector_or_list<T>::value;
+/*inline*/ constexpr bool is_vector_or_list_v = is_vector_or_list<T>::value;
 
 template <typename T>
-typename std::enable_if<std::is_integral<T>::value, void>::type
+inline typename std::enable_if<std::is_integral<T>::value, void>::type
 ip_filter(const T &_ip)
 {
   std::string res{};
@@ -52,7 +52,7 @@ ip_filter(const T &_ip)
 }
 
 template <typename T>
-typename std::enable_if<std::is_same<T, std::string>::value, void>::type
+inline typename std::enable_if<std::is_same<T, std::string>::value, void>::type
 ip_filter(const T &_ip)
 {
   std::cout << _ip << std::endl;
@@ -81,8 +81,12 @@ int main()
   ip_filter(int32_t{2130706433});
   ip_filter(int64_t{8875824491850138409});
   ip_filter(std::string{"Hello, World !"});
-  ip_filter(std::vector<int>{100, 200, 300, 400});
-  ip_filter(std::list<short>{400, 300, 200, 100});
+
+  std::vector<int> ip_vector{100, 200, 300, 400};
+  std::list<short> ip_list{400, 300, 200, 100};
+
+  ip_filter(ip_vector);
+  ip_filter(ip_list);
 
   return 0;
 }
